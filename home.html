@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+	<title>DiaProb</title>
+    <meta name="description" content="Diabetes Probability Predictor.">
+    <link rel="stylesheet" type="text/css" href="/home.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class = "HomeTitle" style="margin: auto; margin-top: 10%;">
+        <div class="card shadow-lg" style="margin-left: 20%; margin-right: 20%">
+            <div class="card-body">
+              <h5 class="card-title" style="text-align: center; font-size: 3rem;margin-top: 2.5%;" >Diabetes Probability</h5>
+              <p class="card-text" style="margin-left: 10%; margin-right:10%; font-size: 0.75rem">
+                Predicts probability of having Diabetes using <strong>Logistic Regression model </strong> generated using 
+                <strong>
+                   <a href="https://scikit-learn.org/stable/"> SciKitLearn</a>
+                </strong> and trained using a dataset from<strong> 
+                  <a href="https://www.kaggle.com/uciml/pima-indians-diabetes-database/data#">  Kaggle</a>
+                </strong>
+                . Dataset trained using records of the 
+                <strong>Indian population</strong>. This script should by no means replace the diagnosis of a doctor and for more 
+                precise results please consult your doctor. This predictor works with <strong>65% accuracy</strong> as glucose levels 
+                are the main indicator of diabetes. Enter values in the indicated boxes and click the calculate button to see
+                your probability. All values must be filled. Click <strong> <a href="DiabetesPrediction.html"> here </a> </strong> to see the script.
+                <hr>
+              </p>
+              <div class="input-group mb-3">
+                <div class="row" style="margin: 0 auto">
+                <input  style="width: 10rem; margin-right: 1.5rem; margin-bottom: 0.8rem;" type="text" class="form-control" placeholder="Age" id="Age" >
+                <input style="width: 10rem; margin-right: 1.5rem;  margin-bottom: 0.8rem;" type="text" class="form-control" placeholder="BMI" id="BMI" >
+                <input  style="width: 10rem; margin-right: 1.5rem;  margin-bottom: 0.8rem;" type="text" class="form-control" placeholder="Blood Pressure" id="BP" >
+                <button type="button" onclick="calculateProb()" style="margin-bottom: 0.8rem;" class="btn btn-primary">Calculate</button>
+             </div>
+              </div>
+            <div class = "row" style="visibility: hidden; justify-content: center; font-size: 1.25rem;" id= "result" >
+            </div>
+            <div style="margin-left: 10%; margin-right:10%; font-size: 0.75rem">
+            <p class="" >
+                <hr>
+                The creator of this website is <strong>Ashank Behara</strong>. You can view his
+                <strong>
+                    <a href="https://abehara2.github.io/"> personal website</a>
+                 </strong> 
+                as well as the
+                <strong>
+                    <a href="https://github.com/abehara2/ML_Diabetes_Predictor"> GitHub Repository</a>
+                 </strong> 
+                  of DiaProb.
+              </p>
+              </div>
+        </div>
+    </div>
+</body>
+<script>
+    function calculateProb() {
+        let age = parseFloat(document.getElementById("Age").value)
+        let bp = parseFloat(document.getElementById("BP").value)
+        let bmi = parseFloat(document.getElementById("BMI").value)
+        if (isNaN(age)) {
+            document.getElementById("result").style.visibility = "hidden";
+           return;
+        }
+        if (isNaN(bp)) {
+            document.getElementById("result").style.visibility = "hidden";
+            return;
+        }
+        if(isNaN(bmi)) {
+            document.getElementById("result").style.visibility = "hidden";
+            return;
+        }
+
+        let lr = -0.19874788214197162 - 0.02439016077668302*bp + 0.02414605522102217*bmi + 0.01859712710835117*age
+        let result = (Math.pow(Math.E, lr)/(1 + Math.pow(Math.E, lr)))
+        let finalRes  =  (result*100).toFixed(2)
+        document.getElementById("result").style.visibility = "visible";
+        console.log("visible")
+        document.getElementById("result").innerHTML = "There is a " + finalRes + "% chance you have diabetes";
+        return finalRes
+    }
+    
+</script>
+</html>
